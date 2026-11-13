@@ -1,0 +1,15 @@
+<main id="main" class="detail-page"><div class="container">
+<a class="back" routerLink="/projets">← {{language.current()==='fr'?'Tous les projets':'All projects'}}</a>
+@if(loading()){<p>Chargement…</p>}
+@else if(error()){<p role="alert">{{language.current()==='fr'?'Impossible de charger le projet.':'Unable to load project.'}}</p>}
+@else if(item();as p){<article><header class="detail-header" appReveal><p class="kicker">{{p.category}} @if(p.year){ · {{p.year}} }</p><h1>{{txt(p.titleFr,p.titleEn)}}</h1><p class="lead">{{txt(p.summaryFr,p.summaryEn)}}</p><div class="tags">@for(t of p.technologies||[];track t){<span>{{t}}</span>}</div></header>
+@if(p.coverUrl){<img class="feature-img" [src]="p.coverUrl" [alt]="txt(p.titleFr,p.titleEn)"/>}
+<div class="detail-body" appReveal>@if(txt(p.descriptionFr,p.descriptionEn)){<section><h2>{{language.current()==='fr'?'Présentation':'Overview'}}</h2><p>{{txt(p.descriptionFr,p.descriptionEn)}}</p></section>}
+@if(txt(p.challengeFr,p.challengeEn)){<section><h2>{{language.current()==='fr'?'Le défi':'The challenge'}}</h2><p>{{txt(p.challengeFr,p.challengeEn)}}</p></section>}
+@if(txt(p.solutionFr,p.solutionEn)){<section><h2>{{language.current()==='fr'?'La solution':'The solution'}}</h2><p>{{txt(p.solutionFr,p.solutionEn)}}</p></section>}
+@if(txt(p.resultFr,p.resultEn)){<section><h2>{{language.current()==='fr'?'Résultats':'Results'}}</h2><p>{{txt(p.resultFr,p.resultEn)}}</p></section>}
+</div><div class="actions">@if(p.demoUrl){<a [href]="p.demoUrl" target="_blank" rel="noopener noreferrer">{{language.current()==='fr'?'Voir la démonstration':'Live demo'}} ↗</a>}@if(p.githubUrl){<a [href]="p.githubUrl" target="_blank" rel="noopener noreferrer">GitHub ↗</a>}</div>
+@if(p.galleryUrls?.length){<div class="gallery">@for(u of p.galleryUrls||[];track u){<img [src]="u" [alt]="txt(p.titleFr,p.titleEn)" loading="lazy"/>}</div>}
+</article>}
+@else{<p>{{language.current()==='fr'?'Ce projet est introuvable ou non publié.':'This project was not found or is unpublished.'}}</p>}
+</div></main>

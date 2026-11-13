@@ -1,0 +1,13 @@
+<section class="section-pad career-section" id="parcours"><div class="container">
+<div appReveal><app-section-title eyebrow="05 / JOURNEY" [title]="lang==='fr'?'Expérience & formation':'Experience & education'" [description]="lang==='fr'?'Un parcours en évolution constante.':'A continuously evolving journey.'"/></div>
+@if(loading()){<p class="muted">{{lang==='fr'?'Chargement…':'Loading…'}}</p>}
+@else if(error()){<p role="alert" class="muted">{{lang==='fr'?'Le parcours est momentanément indisponible.':'Career details are temporarily unavailable.'}}</p>}
+@else {<div class="career-columns">
+<div><h3>{{lang==='fr'?'Expérience professionnelle':'Work experience'}}</h3>
+@if(!experiences().length){<p class="muted">{{lang==='fr'?'À compléter dans Sanity.':'To be completed in Sanity.'}}</p>}
+@for(e of experiences();track e._id){<article class="timeline-entry" appReveal><div class="dates">{{year(e.startDate)}} — {{e.current?(lang==='fr'?'Aujourd’hui':'Present'):year(e.endDate)}}</div><h4>{{txt(e.roleFr,e.roleEn)}}</h4><strong>{{e.organization}}</strong><p>{{txt(e.descriptionFr,e.descriptionEn)}}</p></article>}
+</div><div><h3>{{lang==='fr'?'Formation & certifications':'Education & certifications'}}</h3>
+@if(!education().length){<p class="muted">{{lang==='fr'?'À compléter dans Sanity.':'To be completed in Sanity.'}}</p>}
+@for(e of education();track e._id){<article class="timeline-entry" appReveal><div class="dates">{{e.year}}</div><h4>{{txt(e.diplomaFr,e.diplomaEn)}}</h4><strong>{{e.institution}}</strong><p>{{txt(e.descriptionFr,e.descriptionEn)}}</p>@if(e.certificateUrl){<a [href]="e.certificateUrl" target="_blank" rel="noopener noreferrer">{{lang==='fr'?'Voir le certificat':'View certificate'}} ↗</a>}</article>}
+</div></div>}
+</div></section>

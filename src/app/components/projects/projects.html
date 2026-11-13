@@ -1,0 +1,20 @@
+<section class="section-pad projects-section" id="projets" aria-labelledby="projects-head">
+ <div class="container">
+ <div appReveal><app-section-title eyebrow="04 / SELECTED WORK" [title]="lang==='fr'?'Projets & réalisations':'Projects & selected work'" [description]="lang==='fr'?'Une sélection de travaux publiés et présentés dans leur contexte.':'A selection of published work, presented with context.'" /></div>
+ @if(!compact && items().length){<div class="filters" role="group" [attr.aria-label]="lang==='fr'?'Filtrer les projets':'Filter projects'">
+ <button type="button" [class.selected]="filter()==='all'" (click)="filter.set('all')">{{lang==='fr'?'Tous':'All'}}</button>
+ @for(c of categories();track c){<button type="button" [class.selected]="filter()===c" (click)="filter.set(c)">{{c}}</button>}
+ </div>}
+ @if(loading()){<div class="cards-grid" aria-busy="true"><div class="placeholder" ></div><div class="placeholder"></div></div>}
+ @else if(error()){<p class="state" role="alert">{{lang==='fr'?'Impossible de charger les projets.':'Unable to load projects.'}}</p>}
+ @else if(items().length===0){<div class="empty" appReveal><span>↗</span><p>{{lang==='fr'?'Les projets seront publiés prochainement.':'Projects will be published soon.'}}</p></div>}
+ @else if(shown().length===0){<p class="state">{{lang==='fr'?'Aucun projet dans cette sélection.':'No projects in this selection.'}}</p>}
+ @else {<div class="cards-grid">@for(p of shown();track p._id){
+ <a class="project-card" [routerLink]="['/projets',p.slug]" appReveal>
+ <div class="cover">@if(p.coverUrl){<img [src]="p.coverUrl" [alt]="txt(p.titleFr,p.titleEn)" loading="lazy"/>}@else{<div class="cover-fallback">&lt;/&gt;</div>}<span class="arrow" aria-hidden="true">↗</span></div>
+ <div class="project-meta"><small>{{p.category || 'Project'}} @if(p.year){ · {{p.year}} }</small><h3>{{txt(p.titleFr,p.titleEn)}}</h3><p>{{txt(p.summaryFr,p.summaryEn)}}</p><div class="tech">@for(t of p.technologies||[];track t){<span>{{t}}</span>}</div></div>
+ </a>}
+ </div>}
+ @if(compact && items().length>0){<a class="section-link" routerLink="/projets">{{lang==='fr'?'Tous les projets':'All projects'}} <span>↗</span></a>}
+ </div>
+</section>

@@ -1,0 +1,7 @@
+<section class="section-pad services-section" id="services"><div class="container">
+<div appReveal><app-section-title eyebrow="03 / WHAT I DO" [title]="lang==='fr'?'Services & expertises':'Services & expertise'" [description]="lang==='fr'?'Des prestations adaptées aux besoins réels de chaque projet.':'Services tailored to the real needs of each project.'"/></div>
+@if(loading()){<p class="muted">{{lang==='fr'?'Chargement…':'Loading…'}}</p>}
+@else if(error()){<p class="muted" role="alert">{{lang==='fr'?'Services indisponibles.':'Services unavailable.'}}</p>}
+@else if(!items().length){<div class="empty">{{lang==='fr'?'Les services seront ajoutés depuis Sanity.':'Services will be added through Sanity.'}}</div>}
+@else{<div class="services-grid">@for(s of items();track s._id;let i=$index){<article class="service-card" appReveal><div class="service-number">{{(i+1).toString().padStart(2,'0')}}</div><div class="service-symbol" aria-hidden="true">✳</div><h3>{{txt(s.titleFr,s.titleEn)}}</h3><p>{{txt(s.descriptionFr,s.descriptionEn)}}</p></article>}</div>}
+</div></section>

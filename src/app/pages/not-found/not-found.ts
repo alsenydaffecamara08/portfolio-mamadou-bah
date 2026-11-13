@@ -1,0 +1,3 @@
+import {Component,inject} from '@angular/core';import {RouterLink} from '@angular/router';import {LanguageService} from '../../services/language.service';
+@Component({selector:'app-not-found',standalone:true,imports:[RouterLink],template:`<main class="notfound"><div><p>404</p><h1>{{language.current()==='fr'?'Page introuvable':'Page not found'}}</h1><a routerLink="/">{{language.current()==='fr'?'Retour à l’accueil':'Back home'}} ↗</a></div></main>`,styles:[`.notfound{min-height:65vh;display:grid;place-items:center;text-align:center;background:#f8f9fc;padding:30px}.notfound p{font:400 100px Georgia,serif;color:#a0b2cc;margin:0}.notfound h1{font:400 40px Georgia,serif}.notfound a{color:#5876ad}`]})
+export class NotFoundComponent{language=inject(LanguageService)}

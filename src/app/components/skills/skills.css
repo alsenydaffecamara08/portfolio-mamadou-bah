@@ -1,0 +1,163 @@
+
+:host {
+  display: block;
+}
+
+.skills-section {
+  padding: 110px 7%;
+  background: #f7f8fb;
+  color: #253248;
+}
+
+.skills-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-index {
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #5876ad;
+  margin-bottom: 24px;
+}
+
+.skills-heading {
+  max-width: 760px;
+  margin-bottom: 60px;
+}
+
+.skills-heading h2 {
+  font-family: Georgia, serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: -1.5px;
+  line-height: 1.16;
+  margin: 0 0 25px;
+}
+
+.skills-intro {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #69778b;
+}
+
+.category-block {
+  margin-bottom: 48px;
+}
+
+.category-block h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.skill-card {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  min-height: 190px;
+  border: 1px solid #e4eaf2;
+  border-radius: 14px;
+  background: white;
+
+  transition:
+    transform 350ms ease,
+    border-color 350ms ease,
+    box-shadow 350ms ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-6px);
+  border-color: #bac9dd;
+  box-shadow: 0 15px 35px rgba(37, 50, 72, .06);
+}
+
+.skill-icon {
+  width: 48px;
+  height: 48px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef2f9;
+  border-radius: 12px;
+  color: #5876ad;
+  font-size: 22px;
+  margin-bottom: 23px;
+}
+
+.skill-icon img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.skill-card h4 {
+  font-size: 17px;
+  margin: 0 0 10px;
+}
+
+.skill-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #69778b;
+  margin: 0;
+}
+
+.skill-skeleton {
+  height: 190px;
+  border-radius: 14px;
+  background: linear-gradient(
+    100deg,
+    #e8edf4 20%,
+    #f5f7fa 40%,
+    #e8edf4 60%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+.empty-state {
+  color: #69778b;
+}
+
+@keyframes shimmer {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+@media (max-width: 900px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-section {
+    padding: 75px 6%;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-card {
+    min-height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-card,
+  .skill-skeleton {
+    transition: none;
+    animation: none;
+  }
+}

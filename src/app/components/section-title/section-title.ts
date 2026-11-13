@@ -1,0 +1,3 @@
+import {Component,Input} from '@angular/core';
+@Component({selector:'app-section-title',standalone:true,template:`<div class="section-top"><span class="eyebrow">{{eyebrow}}</span><h2>{{title}}</h2>@if(description){<p>{{description}}</p>}</div>`,styles:[`:host{display:block}.section-top{max-width:760px;margin-bottom:42px}.eyebrow{font:700 11px/1.5 Arial,sans-serif;letter-spacing:.19em;color:#5876ad}.section-top h2{font:400 clamp(34px,5vw,62px)/1.17 Georgia,serif;letter-spacing:-.035em;color:#253248;margin:18px 0}.section-top p{color:#687789;line-height:1.75;font-size:16px}`]})
+export class SectionTitleComponent{@Input() eyebrow='';@Input() title='';@Input() description='';}
