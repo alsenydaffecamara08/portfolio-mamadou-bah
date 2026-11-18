@@ -38,12 +38,22 @@ export interface SiteSettings {
   introFr?:string; introEn?:string;
 }
 
+export interface PortfolioStory {
+  _id: string; titleFr?: string; titleEn?: string; textFr?: string; textEn?: string;
+  author?: string; imageUrl?: string;
+}
+
 @Injectable({providedIn:'root'})
 export class SanityService {
   private client = createClient({
     projectId:'idzv0pyv', dataset:'production', apiVersion:'2026-11-01',
     useCdn:true, perspective:'published'
   });
+  getStories(kind: 'testimonial' | 'journeyPhoto'): Promise<PortfolioStory[]> {
+    return this.client.fetch(`*[_type==$kind && visible==true] | order(coalesce(order,0) asc,_createdAt desc){
+      _id,titleFr,titleEn,textFr,textEn,author,"imageUrl":image.asset->url
+    }`, {kind});
+  }
   getProfile():Promise<PortfolioProfile|null> {
     return this.client.fetch(`*[_type=="profile"]|order(_updatedAt desc)[0]{
       fullName,jobTitleFr,jobTitleEn,biographyFr,biographyEn,

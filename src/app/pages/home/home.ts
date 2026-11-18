@@ -1,3 +1,4 @@
+import { StoriesComponent } from '../../components/stories/stories';
 import {Component,OnInit,inject,signal} from '@angular/core';
 import {SanityService,PortfolioProfile} from '../../services/sanity.service';
 import {LanguageService} from '../../services/language.service';
@@ -9,7 +10,7 @@ import {BlogComponent} from '../../components/blog/blog';
 import {ContactComponent} from '../../components/contact/contact';
 import {RevealDirective} from '../../directives/reveal.directive';
 import {MouseGlowDirective} from '../../directives/mouse-glow.directive';
-@Component({selector:'app-home',standalone:true,imports:[SkillsComponent,ProjectsComponent,CareerComponent,ServicesComponent,BlogComponent,ContactComponent,RevealDirective,MouseGlowDirective],templateUrl:'./home.html',styleUrl:'./home.css'})
+@Component({selector:'app-home',standalone:true,imports:[StoriesComponent,SkillsComponent,ProjectsComponent,CareerComponent,ServicesComponent,BlogComponent,ContactComponent,RevealDirective,MouseGlowDirective],templateUrl:'./home.html',styleUrl:'./home.css'})
 export class HomeComponent implements OnInit {
  language=inject(LanguageService);private cms=inject(SanityService);
  profile=signal<PortfolioProfile|null>(null);loading=signal(true);error=signal(false);

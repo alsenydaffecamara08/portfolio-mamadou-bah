@@ -1,20 +1,209 @@
 <main id="main">
-<section class="hero" id="accueil" appMouseGlow><div class="hero-inner container">
-<div class="hero-content" appReveal>
-<span class="status"><span class="status-dot"></span>{{language.current()==='fr'?'Profil professionnel':'Professional portfolio'}}</span>
-<p class="eyebrow">{{language.current()==='fr'?'Bonjour, je suis':'Hello, I am'}}</p>
-@if(loading()){<div class="loading" role="status">{{language.current()==='fr'?'Chargement du profil…':'Loading profile…'}}</div>}
-@else if(profile();as p){<h1>{{p.fullName}}</h1>@if(title()){<h2>{{title()}}</h2>}@if(bio()){<p class="hero-description">{{bio()}}</p>}}
-@else{<h1>Mamadou Radiagui BAH</h1><p class="loading">{{language.current()==='fr'?'Profil bientôt disponible.':'Profile coming soon.'}}</p>}
-<div class="hero-actions"><a class="btn btn-primary" href="#projets">{{language.current()==='fr'?'Voir mes projets':'View my projects'}} ↗</a><a class="btn btn-outline" href="#contact">{{language.current()==='fr'?'Me contacter':'Contact me'}}</a></div>
-</div>
-<div class="hero-visual" appReveal>@if(profile()?.photoUrl){<div class="portrait-frame"><div class="portrait-glow"></div><img class="portrait" [src]="profile()!.photoUrl" [alt]="profile()!.fullName" fetchpriority="high" decoding="async"/><div class="portrait-tag"><span>✦</span><div><strong>{{language.current()==='fr'?'Profil professionnel':'Professional profile'}}</strong><small>{{title()}}</small></div></div></div>}@else{<div class="portrait-fallback" aria-hidden="true">MR<span>.</span>BAH</div>}</div>
-</div><div class="hero-bottom"><span>{{language.current()==='fr'?'INGÉNIERIE · DÉVELOPPEMENT · CRÉATION':'ENGINEERING · DEVELOPMENT · CREATION'}}</span><a href="#apropos">{{language.current()==='fr'?'DÉCOUVRIR':'EXPLORE'}} ↓</a></div></section>
-<section class="section-pad about-section" id="apropos"><div class="container" appReveal><p class="section-kicker">01 / {{language.current()==='fr'?'À PROPOS':'ABOUT'}}</p><div class="about-grid"><h2>{{language.current()==='fr'?'Construire avec intention.':'Building with purpose.'}}</h2><p>{{bio() || (language.current()==='fr'?'La présentation sera ajoutée depuis Sanity.':'The biography will be added from Sanity.')}}</p></div></div></section>
-<app-skills [langue]="language.current()"></app-skills>
-<app-services [lang]="language.current()"></app-services>
-<app-projects [lang]="language.current()" [compact]="true"></app-projects>
-<app-career [lang]="language.current()"></app-career>
-<app-blog [lang]="language.current()" [compact]="true"></app-blog>
-<app-contact [lang]="language.current()"></app-contact>
+  <section class="hero" id="accueil" appMouseGlow>
+    <div class="hero-inner container">
+      <div class="hero-content" appReveal>
+        <span class="status">
+          <span class="status-dot"></span>
+          {{ language.current() === 'fr' ? 'Profil professionnel' : 'Professional portfolio' }}
+        </span>
+
+        <p class="eyebrow">
+          {{ language.current() === 'fr' ? 'Bonjour, je suis' : 'Hello, I am' }}
+        </p>
+
+        @if (loading()) {
+          <div class="loading" role="status">
+            {{ language.current() === 'fr' ? 'Chargement du profil…' : 'Loading profile…' }}
+          </div>
+        } @else if (profile(); as p) {
+          <h1>{{ p.fullName }}</h1>
+
+          @if (title()) {
+            <h2 class="hero-role">
+              {{ language.current() === 'fr' ? 'Profil :' : 'Profile:' }}
+              <span class="role-text" [style.--letters]="title().length">{{ title() }}</span>
+            </h2>
+          }
+
+          @if (bio()) {
+            <p class="hero-description">{{ bio() }}</p>
+          }
+        } @else {
+          <h1>Mamadou Radiagui BAH</h1>
+          <p class="loading">
+            {{ language.current() === 'fr' ? 'Profil bientôt disponible.' : 'Profile coming soon.' }}
+          </p>
+        }
+
+        <dl class="v2-metrics">
+          <div>
+            <dt>{{ language.current() === 'fr' ? 'Projets réalisés' : 'Completed projects' }}</dt>
+            <dd>—</dd>
+          </div>
+          <div>
+            <dt>{{ language.current() === 'fr' ? 'Années d’expérience' : 'Years of experience' }}</dt>
+            <dd>—</dd>
+          </div>
+          <div>
+            <dt>{{ language.current() === 'fr' ? 'Clients satisfaits' : 'Satisfied clients' }}</dt>
+            <dd>—</dd>
+          </div>
+        </dl>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projets">
+            {{ language.current() === 'fr' ? 'Voir mes réalisations' : 'View my projects' }} ↗
+          </a>
+          <a class="btn btn-outline" href="#contact">
+            {{ language.current() === 'fr' ? 'Contactez-moi' : 'Contact me' }}
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual" appReveal>
+        @if (profile()?.photoUrl) {
+          <div class="portrait-frame">
+            <div class="portrait-glow"></div>
+            <img
+              class="portrait"
+              [src]="profile()!.photoUrl"
+              [alt]="profile()!.fullName"
+              fetchpriority="high"
+              decoding="async"
+            />
+            <div class="portrait-tag">
+              <span>✦</span>
+              <div>
+                <strong>{{ language.current() === 'fr' ? 'Profil professionnel' : 'Professional profile' }}</strong>
+                <small>{{ title() }}</small>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <div class="portrait-fallback" aria-hidden="true">MR<span>.</span>BAH</div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad about-section" id="apropos" aria-labelledby="about-heading">
+    <div class="container">
+      <div appReveal>
+        <p class="section-kicker">
+          01 / {{ language.current() === 'fr' ? 'PRÉSENTATION' : 'INTRODUCTION' }}
+        </p>
+        <h2 id="about-heading">{{ language.current() === 'fr' ? 'À propos' : 'About' }}</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-portrait" appReveal>
+          @if (profile()?.photoUrl; as photo) {
+            <img [src]="photo" alt="" loading="lazy" />
+          }
+        </div>
+
+        <div appReveal>
+          <h3>
+            {{ language.current() === 'fr' ? 'Bonjour, je suis' : 'Hello, I am' }}
+            {{ profile()?.fullName || 'Mamadou Radiagui BAH' }}
+          </h3>
+          @if (bio()) {
+            <p>{{ bio() }}</p>
+          }
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projets">
+              {{ language.current() === 'fr' ? 'Voir mes réalisations' : 'View my work' }}
+            </a>
+            <a class="btn btn-outline" href="#parcours">
+              {{ language.current() === 'fr' ? 'Voir mon parcours' : 'View my career' }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-career [lang]="language.current()"></app-career>
+  <app-skills [langue]="language.current()"></app-skills>
+  <app-services [lang]="language.current()"></app-services>
+
+  <section class="section-pad v2-preview" id="infos">
+    <div class="container" appReveal>
+      <h2>{{ language.current() === 'fr' ? 'Informations complémentaires' : 'Additional information' }}</h2>
+      <div class="v2-grid">
+        <article class="v2-panel glass-edge">
+          <h3>{{ language.current() === 'fr' ? 'Langues' : 'Languages' }}</h3>
+          <p>{{ language.current() === 'fr' ? 'Contenu à renseigner' : 'Content to be added' }}</p>
+        </article>
+        <article class="v2-panel glass-edge">
+          <h3>{{ language.current() === 'fr' ? 'Qualités professionnelles' : 'Professional qualities' }}</h3>
+          <p>{{ language.current() === 'fr' ? 'Contenu à renseigner' : 'Content to be added' }}</p>
+        </article>
+      </div>
+      <div class="v2-references">
+        <article class="v2-panel glass-edge">
+          <h3>{{ language.current() === 'fr' ? 'Références' : 'References' }}</h3>
+          <p>{{ language.current() === 'fr' ? 'Contenu à renseigner' : 'Content to be added' }}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <app-projects [lang]="language.current()" [compact]="true"></app-projects>
+  <app-stories></app-stories>
+
+  <section class="section-pad v2-preview" id="laisser-temoignage">
+    <div class="container" appReveal>
+      <h2>{{ language.current() === 'fr' ? 'Laissez votre témoignage' : 'Leave a testimonial' }}</h2>
+      <form class="v2-panel glass-edge" (submit)="$event.preventDefault()">
+        <div class="v2-grid">
+          <label>
+            {{ language.current() === 'fr' ? 'Nom' : 'Last name' }}
+            <input type="text" />
+          </label>
+          <label>
+            {{ language.current() === 'fr' ? 'Prénom' : 'First name' }}
+            <input type="text" />
+          </label>
+        </div>
+        <label>
+          {{ language.current() === 'fr' ? 'Votre témoignage' : 'Your testimonial' }}
+          <textarea rows="5"></textarea>
+        </label>
+        <p>
+          {{ language.current() === 'fr'
+            ? 'Aperçu : aucun envoi à cette étape.'
+            : 'Preview: submissions are disabled.' }}
+        </p>
+        <button class="btn btn-primary" type="button" disabled>
+          {{ language.current() === 'fr' ? 'Envoyer' : 'Send' }}
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <section class="section-pad v2-preview" id="faq">
+    <div class="container" appReveal>
+      <h2>{{ language.current() === 'fr' ? 'Questions fréquentes' : 'Frequently asked questions' }}</h2>
+
+      <details class="v2-panel glass-edge">
+        <summary>{{ language.current() === 'fr' ? 'Quels types de projets réalisez-vous ?' : 'What types of projects do you work on?' }}</summary>
+        <p>{{ language.current() === 'fr' ? 'Réponse à renseigner.' : 'Answer to be added.' }}</p>
+      </details>
+
+      <details class="v2-panel glass-edge">
+        <summary>{{ language.current() === 'fr' ? 'Quelles technologies utilisez-vous ?' : 'Which technologies do you use?' }}</summary>
+        <p>{{ language.current() === 'fr' ? 'Réponse à renseigner.' : 'Answer to be added.' }}</p>
+      </details>
+
+      <details class="v2-panel glass-edge">
+        <summary>{{ language.current() === 'fr' ? 'Êtes-vous ouvert à de nouvelles collaborations ?' : 'Are you open to new collaborations?' }}</summary>
+        <p>{{ language.current() === 'fr' ? 'Réponse à renseigner.' : 'Answer to be added.' }}</p>
+      </details>
+    </div>
+  </section>
+
+  <app-blog [lang]="language.current()" [compact]="true"></app-blog>
+  <app-contact [lang]="language.current()"></app-contact>
+
 </main>

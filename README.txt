@@ -1,0 +1,1 @@
+Base : Portfolio_V2_Apparence + composants de Portfolio_V2_Integration. Copier src dans mon-projet sur v2-portfolio. Conserver main.ts, styles.css et Sanity. Galerie de maquette distincte de la galerie dynamique : retirer le bloc apercu-galerie lors du raccordement définitif. Aucun envoi du formulaire.

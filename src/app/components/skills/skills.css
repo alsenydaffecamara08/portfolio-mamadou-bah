@@ -5,8 +5,8 @@
 
 .skills-section {
   padding: 110px 7%;
-  background: #f7f8fb;
-  color: #253248;
+  background: #f7f4eb;
+  color: #174447;
 }
 
 .skills-container {
@@ -18,7 +18,7 @@
   font-size: 12px;
   letter-spacing: 2px;
   font-weight: 600;
-  color: #5876ad;
+  color: #286064;
   margin-bottom: 24px;
 }
 
@@ -88,7 +88,7 @@
   justify-content: center;
   background: #eef2f9;
   border-radius: 12px;
-  color: #5876ad;
+  color: #286064;
   font-size: 22px;
   margin-bottom: 23px;
 }
@@ -161,3 +161,5 @@
     animation: none;
   }
 }
+
+.category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}.category-grid .category-block{margin:0;padding:clamp(1rem,3vw,2rem);background:#fff;border:1px solid #dce6df;border-radius:22px;box-shadow:0 14px 36px #1744470c;min-width:0}.category-icon{display:block;color:#286064;font-size:2rem;font-weight:700}.category-grid h3{margin:1rem 0;color:#174447}.skill-badges{display:flex;flex-wrap:wrap;gap:.55rem;padding:0;margin:0;list-style:none}.skill-badges li{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .75rem;background:#e8f1eb;color:#174447;border-radius:9px;font-weight:600;min-width:0;overflow-wrap:anywhere}.skill-badges img{object-fit:contain;flex:none}.category-wide{grid-column:1/-1;border-inline-start:4px solid #a36c49!important}@media(max-width:950px){.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){.category-grid{grid-template-columns:minmax(0,1fr)}}

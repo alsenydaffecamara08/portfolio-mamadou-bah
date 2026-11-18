@@ -1,5 +1,5 @@
 <main class="article-page" id="main"><div class="article-container"><a class="back" routerLink="/blog">← {{language.current()==='fr'?'Tous les articles':'All articles'}}</a>
-@if(loading()){<p>Chargement…</p>}
+@if(loading()){<p role="status">{{language.current()==='fr'?'Chargement…':'Loading…'}}</p>}
 @else if(error()){<p role="alert">{{language.current()==='fr'?'Article indisponible.':'Article unavailable.'}}</p>}
 @else if(item();as a){<article appReveal><div class="meta">{{a.category}} @if(a.publishedAt){ · {{a.publishedAt.slice(0,10)}}}</div><h1>{{language.text(a.titleFr,a.titleEn)}}</h1><p class="lead">{{language.text(a.excerptFr,a.excerptEn)}}</p>@if(a.imageUrl){<img class="cover" [src]="a.imageUrl" [alt]="language.text(a.titleFr,a.titleEn)"/>}
 <div class="article-body">@for(block of body();track $index){@if(block._type==='block'){@switch(block.style){@case('h2'){<h2>{{blockText(block)}}</h2>}@case('h3'){<h3>{{blockText(block)}}</h3>}@default{<p>{{blockText(block)}}</p>}}}}</div></article>}

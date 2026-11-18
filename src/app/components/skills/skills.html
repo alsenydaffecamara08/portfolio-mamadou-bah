@@ -1,21 +1,11 @@
-
 <section class="skills-section" id="competences">
-
   <div class="skills-container">
-
     <div class="skills-heading" appReveal>
-
       <p class="section-index">
-        02 / {{ langue === 'fr'
-          ? 'EXPERTISE TECHNIQUE'
-          : 'TECHNICAL EXPERTISE' }}
+        02 / {{ langue === 'fr' ? 'EXPERTISE TECHNIQUE' : 'TECHNICAL EXPERTISE' }}
       </p>
 
-      <h2>
-        {{ langue === 'fr'
-          ? 'Les technologies au service des idées.'
-          : 'Technology in service of ideas.' }}
-      </h2>
+      <h2>{{ langue === 'fr' ? 'Compétences techniques' : 'Technical skills' }}</h2>
 
       <p class="skills-intro">
         {{ langue === 'fr'
@@ -25,77 +15,66 @@
     </div>
 
     @if (chargement()) {
-
       <div class="skills-grid" aria-busy="true">
         @for (item of [1, 2, 3, 4]; track item) {
           <div class="skill-skeleton"></div>
         }
       </div>
-
     } @else if (erreur()) {
-
       <p role="alert">
         {{ langue === 'fr'
           ? 'Impossible de charger les compétences.'
           : 'Unable to load skills.' }}
       </p>
-
     } @else if (competences().length === 0) {
-
       <p class="empty-state">
         {{ langue === 'fr'
           ? 'Les compétences seront bientôt disponibles.'
           : 'Skills will be available soon.' }}
       </p>
-
     } @else {
-
-      @for (categorie of categories; track categorie) {
-
-        @if (parCategorie(categorie).length > 0) {
-
-          <div class="category-block" appReveal>
-
-            <h3>{{ nomCategorie(categorie) }}</h3>
-
-            <div class="skills-grid">
-
-              @for (skill of parCategorie(categorie); track skill._id) {
-
-                <article class="skill-card">
-
-                  <div class="skill-icon">
-                    @if (skill.iconUrl) {
-                      <img
-                        [src]="skill.iconUrl"
-                        [alt]="skill.name"
-                        loading="lazy"
-                      />
-                    } @else {
-                      <span aria-hidden="true">✦</span>
-                    }
-                  </div>
-
-                  <h4>{{ skill.name }}</h4>
-
-                  @if (description(skill)) {
-                    <p>{{ description(skill) }}</p>
+      <div class="category-grid">
+        @for (categorie of categories; track categorie) {
+          @if (parCategorie(categorie); as groupe) {
+            @if (groupe.length) {
+              <article
+                class="category-block glass-edge"
+                [class.category-wide]="categorie === 'devops'"
+                appReveal
+              >
+                <span class="category-icon" aria-hidden="true">
+                  @switch (categorie) {
+                    @case ('frontend') { &lt;/&gt; }
+                    @case ('database') { ▤ }
+                    @case ('backend') { ⇄ }
+                    @case ('devops') { ↗ }
+                    @default { ✦ }
                   }
+                </span>
 
-                </article>
+                <h3>{{ nomCategorie(categorie) }}</h3>
 
-              }
-
-            </div>
-
-          </div>
-
+                <ul class="skill-badges">
+                  @for (skill of groupe; track skill._id) {
+                    <li>
+                      @if (skill.iconUrl) {
+                        <img
+                          [src]="skill.iconUrl"
+                          alt=""
+                          width="22"
+                          height="22"
+                          loading="lazy"
+                        />
+                      }
+                      <span>{{ skill.name }}</span>
+                    </li>
+                  }
+                </ul>
+              </article>
+            }
+          }
         }
-
-      }
-
+      </div>
     }
-
   </div>
-
 </section>

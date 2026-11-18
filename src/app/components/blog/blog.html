@@ -3,8 +3,8 @@
 @if(loading()){<p class="muted">{{lang==='fr'?'Chargement…':'Loading…'}}</p>}
 @else if(error()){<p class="muted" role="alert">{{lang==='fr'?'Articles momentanément indisponibles.':'Articles temporarily unavailable.'}}</p>}
 @else if(!articles().length){<div class="empty">{{lang==='fr'?'Les publications seront bientôt disponibles.':'Publications will be available soon.'}}</div>}
-@else{<div class="blog-grid">@for(a of visible();track a._id){<a [routerLink]="['/blog',a.slug]" class="article-card" appReveal>
-<div class="article-image">@if(a.imageUrl){<img [src]="a.imageUrl" [alt]="txt(a.titleFr,a.titleEn)" loading="lazy"/>}@else{<span>✳</span>}</div>
+@else{<div class="blog-grid">@for(a of visible();track a._id){<a [routerLink]="['/blog',a.slug]" class="article-card glass-edge" appReveal>
+<div class="article-image">@if(a.imageUrl){<img [src]="a.imageUrl" [alt]="txt(a.titleFr,a.titleEn)" loading="lazy" decoding="async"/>}@else{<span>✳</span>}</div>
 <div class="article-copy"><small>{{a.category}} @if(a.publishedAt){ · {{a.publishedAt.slice(0,10)}}}</small><h3>{{txt(a.titleFr,a.titleEn)}}</h3><p>{{txt(a.excerptFr,a.excerptEn)}}</p><span class="read">{{lang==='fr'?'Lire l’article':'Read article'}} ↗</span></div>
 </a>}</div>}
 @if(compact && articles().length){<a routerLink="/blog" class="more">{{lang==='fr'?'Toutes les publications':'All publications'}} ↗</a>}

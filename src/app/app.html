@@ -1,18 +1,108 @@
 <div class="scroll-progress" appScrollProgress aria-hidden="true"></div>
-<a class="skip-link" href="#main">{{language.current()==='fr'?'Aller au contenu':'Skip to content'}}</a>
-<header class="header"><a class="logo" routerLink="/" (click)="menuOpen.set(false)" aria-label="Accueil">MR<span>.</span>BAH</a>
-<button class="menu-toggle" type="button" [attr.aria-expanded]="menuOpen()" aria-controls="main-nav" [attr.aria-label]="language.current()==='fr'?'Ouvrir le menu':'Open menu'" (click)="menuOpen.set(!menuOpen())">{{menuOpen()?'✕':'☰'}}</button>
-<nav class="navigation" id="main-nav" [class.ouvert]="menuOpen()" [attr.aria-label]="language.current()==='fr'?'Navigation principale':'Main navigation'">
-<a href="/#accueil" (click)="menuOpen.set(false)">{{language.current()==='fr'?'Accueil':'Home'}}</a>
-<a href="/#apropos" (click)="menuOpen.set(false)">{{language.current()==='fr'?'À propos':'About'}}</a>
-<a href="/#competences" (click)="menuOpen.set(false)">{{language.current()==='fr'?'Compétences':'Skills'}}</a>
-<a href="/#services" (click)="menuOpen.set(false)">{{language.current()==='fr'?'Services':'Services'}}</a>
-<a routerLink="/projets" (click)="menuOpen.set(false)">{{language.current()==='fr'?'Projets':'Projects'}}</a>
-<a href="/#parcours" (click)="menuOpen.set(false)">{{language.current()==='fr'?'Parcours':'Journey'}}</a>
-<a routerLink="/blog" (click)="menuOpen.set(false)">Blog</a>
-<a href="/#contact" (click)="menuOpen.set(false)">Contact</a>
-<div class="langues"><button type="button" [class.active]="language.current()==='fr'" [attr.aria-pressed]="language.current()==='fr'" (click)="setLanguage('fr')">FR</button><span aria-hidden="true">/</span><button type="button" [class.active]="language.current()==='en'" [attr.aria-pressed]="language.current()==='en'" (click)="setLanguage('en')">EN</button></div>
-</nav></header>
+
+<a class="skip-link" href="#main">
+  {{ language.current() === 'fr' ? 'Aller au contenu' : 'Skip to content' }}
+</a>
+
+<header class="header" (keydown.escape)="menuOpen.set(false); menuButton.focus()">
+  <a
+    class="logo"
+    routerLink="/"
+    (click)="menuOpen.set(false)"
+    [attr.aria-label]="language.current() === 'fr' ? 'Accueil' : 'Home'"
+  >
+    @if (profile()?.photoUrl; as photo) {
+      <img class="nav-avatar" [src]="photo" alt="" />
+    }
+    <span class="brand-name">{{ profile()?.fullName || 'Mamadou Radiagui BAH' }}</span>
+  </a>
+
+  <button
+    #menuButton
+    class="menu-toggle"
+    type="button"
+    [class.is-open]="menuOpen()"
+    [attr.aria-expanded]="menuOpen()"
+    aria-controls="main-nav"
+    [attr.aria-label]="language.current() === 'fr'
+      ? (menuOpen() ? 'Fermer le menu' : 'Ouvrir le menu')
+      : (menuOpen() ? 'Close menu' : 'Open menu')"
+    (click)="menuOpen.set(!menuOpen())"
+  >
+    <span></span><span></span><span></span>
+  </button>
+
+  @if (menuOpen()) {
+    <button
+      class="nav-shade"
+      type="button"
+      tabindex="-1"
+      [attr.aria-label]="language.current() === 'fr' ? 'Fermer le menu' : 'Close menu'"
+      (click)="menuOpen.set(false); menuButton.focus()"
+    ></button>
+  }
+
+  <nav
+    class="navigation"
+    id="main-nav"
+    [class.ouvert]="menuOpen()"
+    [attr.aria-label]="language.current() === 'fr' ? 'Navigation principale' : 'Main navigation'"
+  >
+    @if (profile()?.photoUrl; as photo) {
+      <img class="drawer-photo" [src]="photo" alt="" />
+    }
+
+    <p class="drawer-name">{{ profile()?.fullName || 'Mamadou Radiagui BAH' }}</p>
+
+    <a href="/#accueil" (click)="menuOpen.set(false)">
+      {{ language.current() === 'fr' ? 'Accueil' : 'Home' }}
+    </a>
+    <a href="/#apropos" (click)="menuOpen.set(false)">
+      {{ language.current() === 'fr' ? 'À propos' : 'About' }}
+    </a>
+    <a href="/#competences" (click)="menuOpen.set(false)">
+      {{ language.current() === 'fr' ? 'Compétences' : 'Skills' }}
+    </a>
+    <a href="/#services" (click)="menuOpen.set(false)">Services</a>
+    <a routerLink="/projets" (click)="menuOpen.set(false)">
+      {{ language.current() === 'fr' ? 'Projets' : 'Projects' }}
+    </a>
+    <a href="/#parcours" (click)="menuOpen.set(false)">
+      {{ language.current() === 'fr' ? 'Parcours' : 'Journey' }}
+    </a>
+    <a routerLink="/blog" (click)="menuOpen.set(false)">Blog</a>
+    <a href="/#contact" (click)="menuOpen.set(false)">Contact</a>
+
+    <div class="langues">
+      <button
+        type="button"
+        [class.active]="language.current() === 'fr'"
+        [attr.aria-pressed]="language.current() === 'fr'"
+        (click)="setLanguage('fr')"
+      >FR</button>
+      <span aria-hidden="true">/</span>
+      <button
+        type="button"
+        [class.active]="language.current() === 'en'"
+        [attr.aria-pressed]="language.current() === 'en'"
+        (click)="setLanguage('en')"
+      >EN</button>
+    </div>
+  </nav>
+</header>
+
 <router-outlet></router-outlet>
-<footer class="footer"><span>© {{year}} Mamadou Radiagui BAH.</span><span>{{language.current()==='fr'?'Tous droits réservés.':'All rights reserved.'}}</span><a href="/#accueil">{{language.current()==='fr'?'RETOUR EN HAUT':'BACK TO TOP'}} ↑</a></footer>
-<button class="back-top" type="button" [attr.aria-label]="language.current()==='fr'?'Retour en haut':'Back to top'" (click)="scrollTop()">↑</button>
+
+<footer class="footer">
+  <span>© {{ year }} Mamadou Radiagui BAH.</span>
+  <span>{{ language.current() === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.' }}</span>
+</footer>
+
+<button
+  class="back-top"
+  type="button"
+  [attr.aria-label]="language.current() === 'fr' ? 'Retour en haut' : 'Back to top'"
+  (click)="scrollTop()"
+>
+  ↑
+</button>

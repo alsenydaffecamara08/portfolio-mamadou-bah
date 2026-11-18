@@ -1,11 +1,11 @@
 <section class="section-pad contact-section" id="contact"><div class="container contact-grid">
-<div appReveal><span class="eyebrow">07 / CONTACT</span><h2>{{lang==='fr'?'Construisons quelque chose ensemble.':"Let's build something together."}}</h2><p>{{lang==='fr'?'Une collaboration, un projet ou une opportunité ? N’hésitez pas à prendre contact.':'A collaboration, project or opportunity? Feel free to get in touch.'}}</p>
+<div appReveal class="contact-info glass-edge"><span class="eyebrow">07 / CONTACT</span><h2>{{lang==='fr'?'Construisons quelque chose ensemble.':"Let's build something together."}}</h2><p>{{lang==='fr'?'Une collaboration, un projet ou une opportunité ? N’hésitez pas à prendre contact.':'A collaboration, project or opportunity? Feel free to get in touch.'}}</p>
 <div class="contact-links">@if(settings()?.email){<a [href]="'mailto:'+settings()!.email">{{settings()!.email}} ↗</a>}
 @if(settings()?.github){<a [href]="settings()!.github" target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
 @if(settings()?.linkedin){<a [href]="settings()!.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
 @if(settings()?.cvUrl){<a [href]="settings()!.cvUrl" target="_blank" rel="noopener noreferrer">{{lang==='fr'?'Voir mon CV':'View resume'}} ↗</a>}</div>
 </div>
-<div appReveal class="form-panel"><h3>{{lang==='fr'?'Votre message':'Your message'}}</h3>
+<div appReveal class="form-panel glass-edge"><h3>{{lang==='fr'?'Contactez-moi':'Get in touch'}}</h3>
 @if(settings()?.email){<form (ngSubmit)="send()" #contactForm="ngForm">
 <label>{{lang==='fr'?'Nom':'Name'}} <input name="name" [(ngModel)]="name" required autocomplete="name" maxlength="120"/></label>
 <label>Email <input name="email" type="email" [(ngModel)]="email" required email autocomplete="email"/></label>

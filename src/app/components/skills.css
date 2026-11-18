@@ -5,8 +5,8 @@
 
 .skills-section {
   padding: 110px 7%;
-  background: #f7f8fb;
-  color: #253248;
+  background: #f7f4eb;
+  color: #174447;
 }
 
 .skills-container {
@@ -18,7 +18,7 @@
   font-size: 12px;
   letter-spacing: 2px;
   font-weight: 600;
-  color: #5876ad;
+  color: #286064;
   margin-bottom: 24px;
 }
 
@@ -88,7 +88,7 @@
   justify-content: center;
   background: #eef2f9;
   border-radius: 12px;
-  color: #5876ad;
+  color: #286064;
   font-size: 22px;
   margin-bottom: 23px;
 }
