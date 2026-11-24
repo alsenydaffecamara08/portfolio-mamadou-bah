@@ -38,15 +38,15 @@
         <dl class="v2-metrics">
           <div>
             <dt>{{ language.current() === 'fr' ? 'Projets réalisés' : 'Completed projects' }}</dt>
-            <dd>—</dd>
+            <dd>{{ extras()?.completedProjects ?? '—' }}</dd>
           </div>
           <div>
             <dt>{{ language.current() === 'fr' ? 'Années d’expérience' : 'Years of experience' }}</dt>
-            <dd>—</dd>
+            <dd>{{ extras()?.yearsOfExperience ?? '—' }}</dd>
           </div>
           <div>
             <dt>{{ language.current() === 'fr' ? 'Clients satisfaits' : 'Satisfied clients' }}</dt>
-            <dd>—</dd>
+            <dd>{{ extras()?.satisfiedClients ?? '—' }}</dd>
           </div>
         </dl>
 
@@ -133,17 +133,35 @@
       <div class="v2-grid">
         <article class="v2-panel glass-edge">
           <h3>{{ language.current() === 'fr' ? 'Langues' : 'Languages' }}</h3>
-          <p>{{ language.current() === 'fr' ? 'Contenu à renseigner' : 'Content to be added' }}</p>
+          <ul>
+            @for (item of extras()?.languages ?? []; track item._key) {
+              <li>{{ localized(item.name) }} @if (localized(item.level)) { — {{ localized(item.level) }} }</li>
+            } @empty {
+              <li>{{ language.current() === 'fr' ? 'Non renseigné' : 'Not provided' }}</li>
+            }
+          </ul>
         </article>
         <article class="v2-panel glass-edge">
           <h3>{{ language.current() === 'fr' ? 'Qualités professionnelles' : 'Professional qualities' }}</h3>
-          <p>{{ language.current() === 'fr' ? 'Contenu à renseigner' : 'Content to be added' }}</p>
+          <ul>
+            @for (item of extras()?.qualities ?? []; track item._key) {
+              <li>{{ localized(item) }}</li>
+            } @empty {
+              <li>{{ language.current() === 'fr' ? 'Non renseigné' : 'Not provided' }}</li>
+            }
+          </ul>
         </article>
       </div>
       <div class="v2-references">
         <article class="v2-panel glass-edge">
           <h3>{{ language.current() === 'fr' ? 'Références' : 'References' }}</h3>
-          <p>{{ language.current() === 'fr' ? 'Contenu à renseigner' : 'Content to be added' }}</p>
+          <ul>
+            @for (item of extras()?.references ?? []; track item._key) {
+              <li>{{ item.name }} @if (localized(item.role)) { — {{ localized(item.role) }} } @if (item.organization) { · {{ item.organization }} }</li>
+            } @empty {
+              <li>{{ language.current() === 'fr' ? 'Non renseigné' : 'Not provided' }}</li>
+            }
+          </ul>
         </article>
       </div>
     </div>
@@ -152,54 +170,20 @@
   <app-projects [lang]="language.current()" [compact]="true"></app-projects>
   <app-stories></app-stories>
 
-  <section class="section-pad v2-preview" id="laisser-temoignage">
-    <div class="container" appReveal>
-      <h2>{{ language.current() === 'fr' ? 'Laissez votre témoignage' : 'Leave a testimonial' }}</h2>
-      <form class="v2-panel glass-edge" (submit)="$event.preventDefault()">
-        <div class="v2-grid">
-          <label>
-            {{ language.current() === 'fr' ? 'Nom' : 'Last name' }}
-            <input type="text" />
-          </label>
-          <label>
-            {{ language.current() === 'fr' ? 'Prénom' : 'First name' }}
-            <input type="text" />
-          </label>
-        </div>
-        <label>
-          {{ language.current() === 'fr' ? 'Votre témoignage' : 'Your testimonial' }}
-          <textarea rows="5"></textarea>
-        </label>
-        <p>
-          {{ language.current() === 'fr'
-            ? 'Aperçu : aucun envoi à cette étape.'
-            : 'Preview: submissions are disabled.' }}
-        </p>
-        <button class="btn btn-primary" type="button" disabled>
-          {{ language.current() === 'fr' ? 'Envoyer' : 'Send' }}
-        </button>
-      </form>
-    </div>
-  </section>
-
-  <section class="section-pad v2-preview" id="faq">
+<section class="section-pad v2-preview" id="faq">
     <div class="container" appReveal>
       <h2>{{ language.current() === 'fr' ? 'Questions fréquentes' : 'Frequently asked questions' }}</h2>
 
-      <details class="v2-panel glass-edge">
-        <summary>{{ language.current() === 'fr' ? 'Quels types de projets réalisez-vous ?' : 'What types of projects do you work on?' }}</summary>
-        <p>{{ language.current() === 'fr' ? 'Réponse à renseigner.' : 'Answer to be added.' }}</p>
-      </details>
-
-      <details class="v2-panel glass-edge">
-        <summary>{{ language.current() === 'fr' ? 'Quelles technologies utilisez-vous ?' : 'Which technologies do you use?' }}</summary>
-        <p>{{ language.current() === 'fr' ? 'Réponse à renseigner.' : 'Answer to be added.' }}</p>
-      </details>
-
-      <details class="v2-panel glass-edge">
-        <summary>{{ language.current() === 'fr' ? 'Êtes-vous ouvert à de nouvelles collaborations ?' : 'Are you open to new collaborations?' }}</summary>
-        <p>{{ language.current() === 'fr' ? 'Réponse à renseigner.' : 'Answer to be added.' }}</p>
-      </details>
+      @for (item of extras()?.faq ?? []; track item._key) {
+        @if (localized(item.question) && localized(item.answer)) {
+          <details class="v2-panel glass-edge">
+            <summary>{{ localized(item.question) }}</summary>
+            <p>{{ localized(item.answer) }}</p>
+          </details>
+        }
+      } @empty {
+        <p>{{ language.current() === 'fr' ? 'Aucune question publiée.' : 'No questions published.' }}</p>
+      }
     </div>
   </section>
 

@@ -43,12 +43,29 @@ export interface PortfolioStory {
   author?: string; imageUrl?: string;
 }
 
+export interface LocalizedText { fr?: string; en?: string; }
+export interface PortfolioExtras {
+  completedProjects?: number | null;
+  yearsOfExperience?: number | null;
+  satisfiedClients?: number | null;
+  languages?: { _key: string; name?: LocalizedText; level?: LocalizedText }[] | null;
+  qualities?: (LocalizedText & { _key: string })[] | null;
+  references?: { _key: string; name?: string; organization?: string; role?: LocalizedText }[] | null;
+  faq?: { _key: string; question?: LocalizedText; answer?: LocalizedText }[] | null;
+}
+
 @Injectable({providedIn:'root'})
 export class SanityService {
   private client = createClient({
     projectId:'idzv0pyv', dataset:'production', apiVersion:'2026-11-01',
     useCdn:true, perspective:'published'
   });
+  getExtras(): Promise<PortfolioExtras | null> {
+    return this.client.fetch<PortfolioExtras | null>(`*[_type == "portfolioExtras"] | order(_updatedAt desc)[0]{
+      completedProjects, yearsOfExperience, satisfiedClients, languages, qualities, references, faq
+    }`);
+  }
+
   getStories(kind: 'testimonial' | 'journeyPhoto'): Promise<PortfolioStory[]> {
     return this.client.fetch(`*[_type==$kind && visible==true] | order(coalesce(order,0) asc,_createdAt desc){
       _id,titleFr,titleEn,textFr,textEn,author,"imageUrl":image.asset->url

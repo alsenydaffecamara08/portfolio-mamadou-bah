@@ -1,6 +1,6 @@
 import { StoriesComponent } from '../../components/stories/stories';
 import {Component,OnInit,inject,signal} from '@angular/core';
-import {SanityService,PortfolioProfile} from '../../services/sanity.service';
+import {SanityService,PortfolioProfile,PortfolioExtras,LocalizedText} from '../../services/sanity.service';
 import {LanguageService} from '../../services/language.service';
 import {SkillsComponent} from '../../components/skills/skills';
 import {ProjectsComponent} from '../../components/projects/projects';
@@ -14,7 +14,14 @@ import {MouseGlowDirective} from '../../directives/mouse-glow.directive';
 export class HomeComponent implements OnInit {
  language=inject(LanguageService);private cms=inject(SanityService);
  profile=signal<PortfolioProfile|null>(null);loading=signal(true);error=signal(false);
- async ngOnInit(){try{this.profile.set(await this.cms.getProfile())}catch(err){console.error(err);this.error.set(true)}finally{this.loading.set(false)}}
+ extras = signal<PortfolioExtras | null>(null);
+ localized(value?: LocalizedText | null) {
+   return this.language.text(value?.fr, value?.en);
+ }
+ async ngOnInit(){
+   void this.cms.getExtras().then(data => this.extras.set(data))
+     .catch(err => console.error('Portfolio extras:', err));
+try{this.profile.set(await this.cms.getProfile())}catch(err){console.error(err);this.error.set(true)}finally{this.loading.set(false)}}
  title(){return this.language.text(this.profile()?.jobTitleFr,this.profile()?.jobTitleEn);}
  bio(){return this.language.text(this.profile()?.biographyFr,this.profile()?.biographyEn);}
 }
